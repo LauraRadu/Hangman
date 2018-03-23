@@ -1,0 +1,74 @@
+body{
+    background: linear-gradient(to bottom right, red, yellow);
+}
+
+ul#movie li {
+    display:inline;
+}
+
+#keyboard {
+    padding: 0;
+    list-style: none;
+    margin: 50px ;
+    width: 500px;
+}
+
+#keyboard li {
+    float: left;
+    margin: 0 5px 5px 0;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #f9f9f9;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.q, .a, .z{
+    clear: left;
+}
+
+#keyboard li:hover, #restart:hover, #verify:hover {
+    position: relative;
+    top: 1px;
+    left: 1px;
+    border-color: #e5e5e5;
+    cursor: pointer;
+}
+
+#movie {
+    font-size:60px;
+    padding-top: 30px;
+    text-align: center;
+}
+
+#letter {
+    float: left;
+    margin-left: 5%;
+    text-align: center;
+    margin-right: 5%;
+}
+
+#hangmanDrawing {
+    width: 300px ;
+    height: 250px;
+    border:1px solid #000000;
+}
+
+#restart {
+    margin-left: 45%;
+    margin-top: 2%;
+}
+
+#restart, #verify, #currentLetter {
+    font-size: larger;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid #f9f9f9;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
