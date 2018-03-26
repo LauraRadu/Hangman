@@ -55,4 +55,8 @@ public class BussinessLogic {
 
         return replacementArray;
     }
+
+    public void verifyMovie(String movie) {
+
+    }
 }

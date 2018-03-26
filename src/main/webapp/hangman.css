@@ -39,7 +39,7 @@ ul#movie li {
 }
 
 #movie {
-    font-size:60px;
+    font-size:50px;
     padding-top: 30px;
     text-align: center;
 }
@@ -71,4 +71,8 @@ ul#movie li {
     border: 1px solid #f9f9f9;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
+}
+
+#currentLetter {
+    width: 300px;
 }

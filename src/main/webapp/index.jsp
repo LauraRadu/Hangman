@@ -11,8 +11,8 @@
 <ul id="movie">
 </ul>
 <div id="letter">
-    <input type="text" id="currentLetter" name="currentLetter" placeholder="Letter"/>
-    <input type="button" id="verify" value="Verify" onClick="verifyLetter()"/>
+    <input type="text" id="currentLetter" name="currentLetter" placeholder="Movie"/>
+    <input type="button" id="verify" value="Verify"  onClick="verifyMovie()"/>
     <ul id="keyboard">
         <li class="letter" id="q" value="q" onclick="verifyLetterKeyboard('q')">q</li>
         <li class="letter" id="w" value="w" onclick="verifyLetterKeyboard('w')">w</li>
@@ -48,18 +48,25 @@
 <br>
 <canvas id="hangmanDrawing"></canvas>
 <br>
-<button type="button" id="restart" onclick="loadMovie()">Restart</button>
+<button type="button" id="restart" onclick="loadMovie()">Start</button>
 </body>
 
 
 <script>
     function loadMovie() {
+        var letters = document.getElementsByClassName("letter");
+        for(var i=0; i<letters.length; i++) {
+            letters[i].style.backgroundColor = "#fff";
+        }
+
+        var c = document.getElementById("hangmanDrawing");
+        var ctx = c.getContext("2d");
+        ctx.clearRect(0, 0, 300, 250);
+
+
         $.ajax({
             url: 'hangman?action=read'
         }).done(function (response) {
-            var c = document.getElementById("hangmanDrawing");
-            var ctx = c.getContext("2d");
-            ctx.clearRect(0, 0, 300, 250);
             putMovieinHTML(response.movie);
         });
     }
@@ -83,7 +90,7 @@
     }
 
     function verifyLetterKeyboard(char) {
-
+        document.getElementById(char).style.background = 'grey';
         $.ajax({
             url: 'hangman?action=write&character=' + char
         }).done(function (response) {
@@ -93,14 +100,15 @@
         });
     }
 
-    function verifyLetter() {          //trimitem date
-        var letter = document.getElementById('currentLetter').value;
-        console.debug(letter);
+    function verifyMovie() {          //trimitem date
+        var movie = document.getElementById('currentLetter').value;
+        console.debug(movie);
         $.ajax({
-            url: 'hangman?action=write&character=' + letter
+            url: 'hangman?action=verifyMovie&movie=' + movie
         }).done(function (response) {
             putMovie(response.movie);
             draw(response.counter);
+            completeGame(response.completeGame);
         });
     }
 
@@ -123,45 +131,61 @@
     }
 
     function draw(counter) {
+        var c = document.getElementById("hangmanDrawing");
+        var ctx = c.getContext("2d");
+
         switch (counter) {
+
             case 1:
                 drawStick1();
                 break;
             case 2:
+                ctx.clearRect(0, 0, 300, 250);
                 drawStick2();
                 break;
             case 3:
+               ctx.clearRect(0, 0, 300, 250);
                 drawStick3();
                 break;
             case 4:
+                ctx.clearRect(0, 0, 300, 250);
                 drawHead();
                 break;
             case 5:
+                ctx.clearRect(0, 0, 300, 250);
                 drawNeck();
                 break;
             case 6:
+                ctx.clearRect(0, 0, 300, 250);
                 drawBody();
                 break;
             case 7:
+                ctx.clearRect(0, 0, 300, 250);
                 drawLegs1();
                 break;
             case 8:
+                ctx.clearRect(0, 0, 300, 250);
                 drawLegs2();
                 break;
             case 9:
+               ctx.clearRect(0, 0, 300, 250);
                 drawHands1();
                 break;
             case 10:
+                ctx.clearRect(0, 0, 300, 250);
                 drawHands2();
                 break;
             case 11:
+                ctx.clearRect(0, 0, 300, 250);
                 gameover();
+                break;
         }
     }
 
     function drawStick1() {
         var c = document.getElementById("hangmanDrawing");
         var ctx = c.getContext("2d");
+        ctx.beginPath();
         ctx.moveTo(40, 10);
         ctx.lineTo(40, 230);
         ctx.stroke();
@@ -186,7 +210,8 @@
     function drawHead() {
         var c = document.getElementById("hangmanDrawing");
         var ctx = c.getContext("2d");
-        ctx.beginPath();
+
+        ctx.moveTo(180, 30);
         ctx.arc(180, 40, 10, 0, 2 * Math.PI);
         ctx.stroke();
     }
@@ -202,7 +227,7 @@
     function drawBody() {
     var c = document.getElementById("hangmanDrawing");
     var ctx = c.getContext("2d");
-    ctx.beginPath();
+
     ctx.arc(180, 80, 20, 0, 2 * Math.PI);
     ctx.stroke();
     }

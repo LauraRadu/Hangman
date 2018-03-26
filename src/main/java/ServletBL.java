@@ -23,6 +23,8 @@ import java.sql.SQLException;
                 read(req, resp);
             else if (action != null && action.equals("write"))
                 write(req, resp);
+            else if (action != null && action.equals("verifyMovie"))
+                verifyMovie(req, resp);
         }
 
         private void read(HttpServletRequest req, HttpServletResponse resp)  {
@@ -82,6 +84,49 @@ import java.sql.SQLException;
                 returnJsonResponse(resp, json.toString());
             }
         }
+
+    private void verifyMovie(HttpServletRequest req, HttpServletResponse resp) {
+        BussinessLogic bl = BussinessLogic.getInstance();
+
+        if (bl.completeGame == 0) {
+            String movie = req.getParameter("movie");
+
+            char[] initialMovie = null;
+            HttpSession session = req.getSession();
+            Object o = session.getAttribute("movie");
+            if (o != null) {
+                initialMovie = (char[]) o;
+            }
+
+            String iniMovie = String.copyValueOf(initialMovie);
+            System.out.println(iniMovie + " ini movie");
+            int completeGame = bl.completeGame;
+            int c = bl.counter;
+
+            if(movie.equalsIgnoreCase(iniMovie))  {
+
+                movieChar = iniMovie.toCharArray();
+
+                completeGame= 1;
+                bl.completeGame =1;
+          }
+          else{
+                c++;
+                bl.counter++;
+            }
+
+
+            System.out.println(bl.completeGame);
+
+            JSONObject json = new JSONObject();
+            json.put("movie", movieChar);
+            json.put("counter", c);
+            json.put("completeGame", completeGame);
+            System.out.println(json.toString());
+
+            returnJsonResponse(resp, json.toString());
+        }
+    }
 
         private void returnJsonResponse(HttpServletResponse response, String jsonResponse) {
             response.setContentType("application/json");
