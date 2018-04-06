@@ -1,7 +1,6 @@
 import java.sql.*;
 
 public class DBOperations {
-
     public String getMovie() throws ClassNotFoundException, SQLException {
         Class.forName("org.postgresql.Driver");
 

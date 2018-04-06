@@ -8,6 +8,8 @@ public class BussinessLogic {
 
     private static BussinessLogic m;
 
+    private BussinessLogic() {}
+
     public static BussinessLogic getInstance() {
         if (m == null) {
             m = new BussinessLogic();
@@ -56,7 +58,4 @@ public class BussinessLogic {
         return replacementArray;
     }
 
-    public void verifyMovie(String movie) {
-
-    }
 }
